@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-#chat-input {
-  field-sizing: content;
-  min-height: 1lh;
+@layer base {
+  body {
+    font-size: 1rem;
+  }
+
+  #chat-input {
+    field-sizing: content;
+    min-height: 1lh;
+  }
 }
