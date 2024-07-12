@@ -1,14 +1,20 @@
-export async function createTextSession() {
-  const result = await window.ai.createTextSession()
+import { remember } from "@epic-web/remember"
+
+export const textSession = remember("textSession", () =>
+  window.ai.createTextSession()
+)
+
+export async function promptText(message) {
+  const result = await (await textSession).prompt(message)
+  return result
+}
+
+export async function promptTextStreaming(message) {
+  const result = await (await textSession).promptStreaming(message)
   return result
 }
 
 export async function canCreateTextSession() {
   const result = await window.ai.canCreateTextSession()
   return result === "readily"
-}
-
-export async function prompt(session, message) {
-  const result = await session.prompt(message)
-  return result
 }

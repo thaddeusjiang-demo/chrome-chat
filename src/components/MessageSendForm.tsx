@@ -5,7 +5,7 @@ import { useHotkeys } from "react-hotkeys-hook"
 import { twMerge } from "tailwind-merge"
 
 import { db } from "~src/db"
-import { createTextSession } from "~src/utils/raw_chromeai"
+import { promptText } from "~src/utils/raw_chromeai"
 
 // utils
 async function generateMessage(message: string) {
@@ -26,17 +26,26 @@ async function sendMessage(message, to_id?: string) {
     created_at: new Date().toISOString()
   })
 
-  // TODO: talk to ai
-  // const response = await generateMessage(message)
-  const session = await createTextSession()
-  const response = await session.prompt(message)
+  // TODO: 连续对话
+  const response = await promptText(message)
   console.debug("response", response)
+
+  // MEMO: joke, I will remove this
+  // await db.messages.add({
+  //   text: "...",
+  //   from_id: "app",
+  //   to_id: "me",
+  //   created_at: new Date().toISOString()
+  // })
+
   const res_id = await db.messages.add({
     text: response,
     from_id: to_id ?? "default",
     to_id: "me",
     created_at: new Date().toISOString()
   })
+
+  // await db.messages.where("text").equals("...").delete()
 
   return res_id
 }
@@ -81,7 +90,7 @@ export function MessageSendForm() {
           <button
             type="submit"
             disabled={!message?.trim()}
-            className=" btn btn-circle btn-sm  absolute bottom-3 right-2 ">
+            className=" btn btn-circle btn-sm btn-primary  absolute bottom-3 right-2 ">
             <svg
               className=" w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"

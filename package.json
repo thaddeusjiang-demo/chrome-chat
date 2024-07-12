@@ -10,6 +10,8 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@epic-web/remember": "^1.1.0",
+    "@tanstack/react-query": "^5.51.1",
     "ai": "^3.2.20",
     "chrome-ai": "^1.8.0",
     "dexie": "^4.0.8",
@@ -20,6 +22,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.52.1",
     "react-hotkeys-hook": "^4.5.0",
+    "react-intersection-observer": "^9.13.0",
     "remarkable": "^2.0.1",
     "tailwind-merge": "^2.4.0"
   },
