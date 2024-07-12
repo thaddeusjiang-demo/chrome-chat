@@ -1,5 +1,6 @@
 import hljs from "highlight.js" // https://highlightjs.org/
 import { Remarkable } from "remarkable"
+import { linkify } from "remarkable/linkify"
 import { twMerge } from "tailwind-merge"
 
 // TODO: code highlight still not working
@@ -9,7 +10,6 @@ var md = new Remarkable({
   xhtmlOut: false, // Use '/' to close single tags (<br />)
   breaks: false, // Convert '\n' in paragraphs into <br>
   langPrefix: "language-", // CSS language prefix for fenced blocks
-  linkify: true, // autoconvert URL-like texts to links
   linkTarget: "", // set target to open link in
 
   // Enable some language-neutral replacements + quotes beautification
@@ -34,7 +34,7 @@ var md = new Remarkable({
 
     return "" // use external default escaping
   }
-})
+}).use(linkify)
 
 export const MessageBubble = ({ message }: { message }) => {
   return (
@@ -43,7 +43,7 @@ export const MessageBubble = ({ message }: { message }) => {
         "flex w-full",
         message.from_id === "me" ? " justify-end" : " justify-start"
       )}>
-      <div className=" my-2  min-h-[2.5rem] max-w-[90%] overflow-hidden rounded-lg bg-blue-100 px-4 py-2">
+      <div className=" my-2  min-h-[2.5rem] overflow-hidden rounded-lg bg-blue-100 px-2 py-2">
         <div
           className="prose"
           dangerouslySetInnerHTML={{ __html: md.render(message.text) }}
